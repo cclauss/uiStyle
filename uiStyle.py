@@ -31,8 +31,8 @@ def style(style_view, view):
     if type(style_view) == str:
         try:
             style_view = ui.load_view(style_view)
-        except Exception, e:
-            print e
+        except ValueError as e:
+            print(e)
     style_list = _generate_styles(style_view)
     view.background_color = style_view.background_color
     for v in view.subviews:
@@ -44,8 +44,8 @@ def style(style_view, view):
                         try:
                             style_attr = getattr(style_view[key], str(attr))
                             setattr(view[v.name], attr, style_attr)
-                        except:
-                            pass #attribue does not exist for this control
+                        except AttributeError:
+                            pass  # attribue does not exist for this control
                     v.name = v.name.lstrip(key)
                     break
 
